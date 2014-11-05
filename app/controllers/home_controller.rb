@@ -1,10 +1,14 @@
 class HomeController < ApplicationController
   respond_to :json, :html
 
-  SECRET_TOKEN = ENV['SECRET_TOKEN'] || 'FOOOOOOOO'
+  skip_before_filter
+  protect_from_forgery :except => :index
+
+  SECRET_TOKEN_SANITY_ENV = ENV['SECRET_TOKEN_SANITY']
 
   def index
-    if params[:token] == SECRET_TOKEN
+    if params[:token] == SECRET_TOKEN_SANITY_ENV
+      puts "hello"
       trigger_ci_build
     end
     result = { success: true}

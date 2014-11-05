@@ -32,6 +32,3 @@ production:
   reconnect: false
   database: production_sanity_feature_runner
   pool: 10
-  username: postgres
-  password: test
-  host: localhost
