@@ -42,6 +42,7 @@ private
   end
 
   def sanity_features_github_url
+    Rails.logger.info("https://#{ENV['GITHUB_AUTH_TOKEN']}@github.com/workato/sanity_features.git")
     "https://#{ENV['GITHUB_AUTH_TOKEN']}@github.com/workato/sanity_features.git"
   end
 
