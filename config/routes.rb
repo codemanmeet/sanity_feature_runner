@@ -1,4 +1,4 @@
 SanityFeatureRunner::Application.routes.draw do
   root :to => 'home#index'
-  match '/', to: 'home#index', via: :post
+  match '/result', to: 'home#result', via: :post
 end

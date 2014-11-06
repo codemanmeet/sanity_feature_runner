@@ -1,18 +1,21 @@
 class HomeController < ApplicationController
   respond_to :json, :html
 
-  skip_before_filter
-  protect_from_forgery :except => :index
+  skip_before_filter :verify_authenticity_token, :only => [:result]
+  protect_from_forgery :except => :result
 
-  SECRET_TOKEN_SANITY_ENV = ENV['SECRET_TOKEN_SANITY']
+  SECRET_TOKEN_SANITY_ENV = ENV["SECRET_TOKEN_SANITY"]
 
   def index
-    if params[:token] == SECRET_TOKEN_SANITY_ENV
-      puts "hello"
-      trigger_ci_build
-    end
     result = { success: true}
     respond_with result
+  end
+
+  def result 
+    if params[:token] == SECRET_TOKEN_SANITY_ENV
+      trigger_ci_build
+    end
+    render nothing: true
   end
 
 private
@@ -39,7 +42,7 @@ private
   end
 
   def sanity_features_github_url
-    'git@github.com:kandadaboggu/sanity_features.git'
+    "https://#{ENV['GITHUB_AUTH_TOKEN']}@github.com/workato/sanity_features.git"
   end
 
   def touch_readme
