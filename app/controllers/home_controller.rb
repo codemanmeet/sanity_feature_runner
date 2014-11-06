@@ -13,7 +13,6 @@ class HomeController < ApplicationController
 
   def result 
     if params[:token] == SECRET_TOKEN_SANITY_ENV
-      puts "hello           "
       trigger_ci_build
     end
     render nothing: true
@@ -23,6 +22,8 @@ private
   def trigger_ci_build
     prepare_git_working_dir
     repo = Git.clone(sanity_features_github_url, 'sanity_features', :path => git_working_dir_base)
+    repo.config('user.name', 'Manmeet Saluja')
+    repo.config('user.email', 'manmeet.saluja94@gmail.com')
     message = touch_readme
     repo.add(all: true)
     repo.commit(message)
@@ -43,7 +44,6 @@ private
   end
 
   def sanity_features_github_url
-    Rails.logger.info("https://#{ENV['GITHUB_AUTH_TOKEN']}@github.com/workato/sanity_features.git")
     "https://#{ENV['GITHUB_AUTH_TOKEN']}@github.com/workato/sanity_features.git"
   end
 
