@@ -13,6 +13,7 @@ class HomeController < ApplicationController
 
   def result 
     if params[:token] == SECRET_TOKEN_SANITY_ENV
+      puts "hello           "
       trigger_ci_build
     end
     render nothing: true
